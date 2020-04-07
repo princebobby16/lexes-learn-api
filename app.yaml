@@ -1,0 +1,8 @@
+application: lexes_learn_server 
+version: 1.0.0
+runtime: go114
+api_version: go1
+
+handlers:
+- url: /.*
+  script: _go_app
