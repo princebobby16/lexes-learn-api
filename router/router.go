@@ -7,23 +7,12 @@ type Route struct {
 	Name string
 	Path string
 	Method string
-	Handler http.Handler
+	Handler http.HandlerFunc
 }
 
 // Create an object of different routes
-type Routes struct {
-	Routes Route
-}
+type Routes []Route
 
-func (routes Routes) initRoutes() Routes {
-	routes = Routes{
-		Route{
-			Name:    "",
-			Path:    "",
-			Method:  "",
-			Handler: nil,
-		},
-
-	}
-	return routes
-}
+//func SetRoutes() *Routes {
+//
+//}
