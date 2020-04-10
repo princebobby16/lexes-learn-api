@@ -6,6 +6,7 @@ import (
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	"lexes_learn_server/common"
+	"lexes_learn_server/common/middleware"
 	"lexes_learn_server/router"
 	"log"
 	"net/http"
@@ -17,8 +18,7 @@ import (
 func main() {
 	// Initialize system variables
 	common.StartUp()
-
-
+	
 	var wait time.Duration
 	flag.DurationVar(&wait, "graceful-timeout", time.Second * 15, "the duration for which the server gracefully wait for existing connections to finish - e.g. 15s or 1m")
 	flag.Parse()
@@ -42,8 +42,7 @@ func main() {
 		"Content-Type",
 		"Content-Length",
 		"Content-Event-Type",
-		"Accept",
-		"X-CSRF-Token",
+		"X-Requested-With",
 		"Accept-Encoding",
 		"Authorization",
 	})
@@ -62,6 +61,8 @@ func main() {
 		IdleTimeout:  time.Second * 60,
 		Handler: handlers.CORS(origins, headers, methods)(r), // Pass our instance of gorilla/mux in.
 	}
+
+	r.Use(middleware.JSONMiddleware)
 
 	// Run our server in a goroutine so that it doesn't block.
 	go func() {

@@ -8,8 +8,6 @@ type HealthCheck struct {
 }
 
 type ErrorMessage struct {
-	Type string 			`json:"type"`
 	Status string 			`json:"status"`
 	Message string 			`json:"message"`
-	StatusCode int 			`json:"status_code"`
 }

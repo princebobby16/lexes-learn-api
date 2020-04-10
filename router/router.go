@@ -2,6 +2,7 @@ package router
 
 import (
 	"lexes_learn_server/controllers/healthcheck"
+	"lexes_learn_server/controllers/login"
 	"lexes_learn_server/controllers/register"
 	"net/http"
 )
@@ -29,13 +30,13 @@ func InitRoutes() Routes {
 			Name:    "Login",
 			Path:    "/users/login",
 			Method:  http.MethodPost,
-			Handler: nil,
+			Handler: login.SignInHandler,
 		},
 		Route{
 			Name:    "Register",
 			Path:    "/users/register",
 			Method:  http.MethodPost,
-			Handler: register.Register,
+			Handler: register.SignUpHandler,
 		},
 	}
 
