@@ -25,9 +25,10 @@ func Register(w http.ResponseWriter, r *http.Request) {
 
 		if err != nil {
 			log.Printf("[ErrorMessage]: %s", err.Error())
+			return
 		}
 
-		//w.WriteHeader(http.StatusInternalServerError)
+		return
 	}
 
 	response := &models.RegisterResponse{
@@ -49,8 +50,9 @@ func Register(w http.ResponseWriter, r *http.Request) {
 		err = json.NewEncoder(w).Encode(errorMessage)
 		if err != nil {
 			log.Printf("Unable to encode response [ErrorMessage]: %s", err.Error())
+			return
 		}
 
-		//w.WriteHeader(http.StatusInternalServerError)
+		return
 	}
 }

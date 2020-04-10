@@ -6,8 +6,6 @@ import (
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	"lexes_learn_server/common"
-	"lexes_learn_server/controllers/healthcheck"
-	"lexes_learn_server/controllers/register"
 	"lexes_learn_server/router"
 	"log"
 	"net/http"
@@ -28,26 +26,7 @@ func main() {
 	// Add your routes as needed
 	r := mux.NewRouter()
 
-	routes := router.Routes{
-		router.Route{
-			Name:    "Index",
-			Path:    "/",
-			Method:  http.MethodGet,
-			Handler: healthcheck.IndexHandler,
-		},
-		router.Route{
-			Name:    "Login",
-			Path:    "/users/login",
-			Method:  http.MethodGet,
-			Handler: nil,
-		},
-		router.Route{
-			Name:    "Register",
-			Path:    "/users/register",
-			Method:  http.MethodGet,
-			Handler: register.Register,
-		},
-	}
+	routes := router.InitRoutes()
 
 	for _, route := range routes {
 		r.Name(route.Name).
