@@ -26,7 +26,7 @@ func Up_20200410153954(txn *sql.Tx) {
 
 // Down is executed when this migration is rolled back
 func Down_20200410153954(txn *sql.Tx) {
-	_, err := txn.Exec("DROP TABLE lexes.admin_users CASCADE ;")
+	_, err := txn.Exec("DROP TABLE IF EXISTS lexes.admin_users CASCADE ;")
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -9,6 +9,8 @@ import (
 
 var err error
 
+var DBConnection *sql.DB
+
 func Connect() {
 	err = LoadDbConfig()
 	if err != nil {
@@ -22,6 +24,8 @@ func Connect() {
 		panic(err)
 	}
 	defer db.Close()
+
+	DBConnection = db
 
 	err = db.Ping()
 	if err != nil {
