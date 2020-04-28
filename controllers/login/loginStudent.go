@@ -9,6 +9,7 @@ import (
 	"lexes_learn_server/models"
 	"log"
 	"net/http"
+	"time"
 )
 
 const (
@@ -35,7 +36,7 @@ func init() {
 	}
 }
 
-func SignInHandler(w http.ResponseWriter, r *http.Request) {
+func SignInStudentHandler(w http.ResponseWriter, r *http.Request) {
 
 	var userLogin models.LoginRequest
 
@@ -54,6 +55,8 @@ func SignInHandler(w http.ResponseWriter, r *http.Request) {
 		)
 		return
 	}
+
+	log.Println("Student")
 
 	log.Println(string(requestBody))
 
@@ -96,8 +99,8 @@ func SignInHandler(w http.ResponseWriter, r *http.Request) {
 	var (
 		userData models.LoginData
 
-		getUserData = `SELECT login_id, student_id, password
-		FROM lexes.studentlogin
+		getUserData = `SELECT student_id, username, password 
+		FROM lexes.student
 		WHERE username = $1`
 	)
 
@@ -108,13 +111,20 @@ func SignInHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	ok := row.Next()
+	if !ok {
+		log.Println("Issue")
+	}
+
 	err = row.Scan(
-		&userData.LoginID,
 		&userData.StudentID,
+		&userData.Username,
 		&userData.Password,
 	)
 	if err != nil {
+		log.Println("DB error")
 		log.Println(err)
+		log.Println("DB error")
 		return
 	}
 
@@ -126,12 +136,13 @@ func SignInHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"login_id":   userData.LoginID,
 		"student_id": userData.StudentID,
+		"username": userData.Username,
 		"password":   userData.Password,
+		"exp": time.Now().Add(time.Minute * 20).Unix(),
 	})
 
-	tokenString, err := token.SignedString([]byte("way"))
+	tokenString, err := token.SignedString(signPrivateKey)
 
 	if err != nil {
 		log.Println(err)

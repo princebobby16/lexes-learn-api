@@ -7,8 +7,8 @@ import (
 )
 
 // Up is executed when this migration is applied
-func Up_20200410151203(txn *sql.Tx) {
-	_, err := txn.Exec("CREATE SCHEMA IF NOT EXISTS lexes AUTHORIZATION postgres;")
+func Up_20200411214815(txn *sql.Tx) {
+	_, err := txn.Exec("CREATE SCHEMA IF NOT EXISTS lexes AUTHORIZATION lexes;")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -16,7 +16,7 @@ func Up_20200410151203(txn *sql.Tx) {
 }
 
 // Down is executed when this migration is rolled back
-func Down_20200410151203(txn *sql.Tx) {
+func Down_20200411214815(txn *sql.Tx) {
 	_, err := txn.Exec("DROP SCHEMA IF EXISTS lexes CASCADE;")
 	if err != nil {
 		log.Fatal(err)

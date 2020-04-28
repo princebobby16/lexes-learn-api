@@ -19,7 +19,7 @@ func (req *LoginRequest) FromJson(r *http.Request) error {
 }
 
 type LoginResponse struct {
-	Token json.Token `json:"token"`
+	Token string `json:"token"`
 }
 
 func (resp *LoginResponse) ToJson(w http.ResponseWriter) error {
@@ -41,7 +41,13 @@ type LoginErrorData struct {
 }
 
 type LoginData struct {
-	LoginID   int    `json:"login_id"`
 	StudentID string `json:"student_id"`
+	Username  string `json:"username"`
 	Password  string `json:"password"`
+}
+
+type LoginTeacherData struct {
+	TeacherID string 	`json:"teacher_id"`
+	Username string 	`json:"username"`
+	Password string 	`json:"password"`
 }

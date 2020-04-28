@@ -23,7 +23,6 @@ func Connect() {
 	if err != nil {
 		panic(err)
 	}
-	defer db.Close()
 
 	DBConnection = db
 
@@ -34,4 +33,13 @@ func Connect() {
 	}
 
 	log.Println("Connected to Postgres DB successfully")
+}
+
+func DisconnectDB() error {
+	err = DBConnection.Close()
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

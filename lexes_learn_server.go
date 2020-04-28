@@ -7,6 +7,7 @@ import (
 	"github.com/gorilla/mux"
 	"lexes_learn_server/common"
 	"lexes_learn_server/common/middleware"
+	"lexes_learn_server/data/db"
 	"lexes_learn_server/router"
 	"log"
 	"net/http"
@@ -69,6 +70,13 @@ func main() {
 		log.Println("Server running on port 8000")
 		if err := server.ListenAndServe(); err != nil {
 			log.Println(err)
+		}
+	}()
+
+	defer func() {
+		err := db.DisconnectDB()
+		if err != nil {
+			log.Fatal(err.Error())
 		}
 	}()
 
