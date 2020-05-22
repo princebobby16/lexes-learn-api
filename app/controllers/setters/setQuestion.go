@@ -12,31 +12,23 @@ import (
 	"net/http"
 )
 
-const (
-	privateKeyPath = "keys/app.rsa"
-	publicKeyPath  = "keys/app.rsa.pub"
-)
-
-var err error
-
-var (
-	verifyPublicKey, signPrivateKey []byte
-)
-
-func init() {
-	signPrivateKey, err = ioutil.ReadFile(privateKeyPath)
-	if err != nil {
-		log.Fatal(err.Error())
-		return
-	}
-	verifyPublicKey, err = ioutil.ReadFile(publicKeyPath)
-	if err != nil {
-		log.Fatal(err.Error())
-		return
-	}
-}
 
 func SetQuestion(w http.ResponseWriter, r *http.Request)  {
+	signPrivateKey, err := common.Init()
+	if err != nil {
+		errorMessage := models.ErrorMessage{
+			Status: "Failed",
+			Message: "Internal Server Error",
+		}
+		log.Println(err)
+		err = json.NewEncoder(w).Encode(errorMessage)
+		if err != nil {
+			log.Printf("[ErrorMessage]: %s", err.Error())
+			return
+		}
+		return
+	}
+
 	var requestData *models.QuestionsRequest
 
 	requestBody, err := ioutil.ReadAll(r.Body)

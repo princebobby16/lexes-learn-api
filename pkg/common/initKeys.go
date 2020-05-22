@@ -6,8 +6,7 @@ import (
 )
 
 const (
-	privateKeyPath = "keys/app.rsa"
-	publicKeyPath  = "keys/app.rsa.pub"
+	privateKeyPath = "pkg/keys/app.rsa"
 )
 
 var err error

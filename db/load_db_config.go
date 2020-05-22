@@ -17,7 +17,7 @@ type pgInfo struct{
 var postgresConfig pgInfo
 
 func LoadDbConfig() error {
-	file, err := os.Open("data/db/db.json")
+	file, err := os.Open("db/db.json")
 	if err != nil {
 		log.Fatalf("[loadDbConfig]: %s", err.Error())
 		return err

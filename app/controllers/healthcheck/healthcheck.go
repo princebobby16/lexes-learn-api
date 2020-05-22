@@ -2,7 +2,7 @@ package healthcheck
 
 import (
 	"encoding/json"
-	"lexes_learn_server/models"
+	"lexes_learn_server/pkg/models"
 	"log"
 	"net/http"
 )
